@@ -7,7 +7,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-public class Settings {
+public class WebDriverSettings {
 	// http://stefanteixeira.com.br/2014/04/29/entendendo-os-tipos-de-esperas-no-selenium-webdriver/
 	public static final void inicializar()
 	{
@@ -17,9 +17,9 @@ public class Settings {
 		System.setProperty("webdriver.ie.driver", pasta + "IEDriverServer.exe");
 	}
 	
-	public static void esperarPorComponentes(WebDriver driver)
+	public static void esperarPorComponentes(WebDriver driver, int tempoSegundos)
 	{
-		driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
+		driver.manage().timeouts().implicitlyWait(tempoSegundos, TimeUnit.SECONDS);
 	}
 	
 	public static void esperarPorComponente(WebDriver driver, String id, int tempoSegundos)
