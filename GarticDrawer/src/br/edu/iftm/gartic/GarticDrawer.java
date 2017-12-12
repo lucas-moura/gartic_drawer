@@ -1,5 +1,8 @@
 package br.edu.iftm.gartic;
 
+import java.awt.Color;
+import java.awt.Graphics2D;
+import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferByte;
 import java.io.IOException;
@@ -69,7 +72,7 @@ public class GarticDrawer {
 	{
 		boolean exit = false;
 		WebDriver driverGetImage = new ChromeDriver();
-		driverGetImage.get("https://www.google.com.br/imghp?as_st=y&tbm=isch&as_q=&as_epq=&as_oq=&as_eq=&cr=&as_sitesearch=&safe=images&tbs=isz:i");
+		driverGetImage.get("https://images.google.com");
 		
 		while(!exit)
 		{
@@ -96,12 +99,13 @@ public class GarticDrawer {
 			tamanhoPincel = 2;
 		
 		if(imageLink == "")
-			urlImagem = new URL(getImageLink(word + " -.gif", driverGetImage));
+			urlImagem = new URL(getImageLink(word + " colorir -.gif -.png", driverGetImage));
 		else
 			urlImagem = new URL(word);
 		
 		BufferedImage image = ImageIO.read(urlImagem);
-		//image = resize(image, redimensionarImagemXY, redimensionarImagemXY);
+		image = resize(image, redimensionarImagemXY, redimensionarImagemXY);
+		//removeAlphaChannel(image);
 		
 		//Definir tamanho do pincel
 		if(tamanhoPincel < 3) {
@@ -147,6 +151,15 @@ public class GarticDrawer {
 			}
 		}
 	}
+	
+	/*private void removeAlphaChannel(BufferedImage image)
+	{
+		Graphics2D g2d = image.createGraphics();
+		g2d.setColor(Color.WHITE); // Or what ever fill color you want...
+		g2d.fillRect(0, 0, image.getWidth(), image.getHeight());
+		g2d.drawImage(image, 0, 0, null);
+		g2d.dispose();
+	}*/
 
 	
 	public static String getImageLink(String pesquisa, WebDriver driver) throws IOException, InterruptedException {
@@ -189,6 +202,15 @@ public class GarticDrawer {
 	{
 		return Thumbnails.of(img).size(newW, newH).asBufferedImage();
 	}
+	
+	private static BufferedImage resize2(BufferedImage img, int height, int width) {
+        Image tmp = img.getScaledInstance(width, height, Image.SCALE_SMOOTH);
+        BufferedImage resized = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+        Graphics2D g2d = resized.createGraphics();
+        g2d.drawImage(tmp, 0, 0, null);
+        g2d.dispose();
+        return resized;
+    }
 	
 	private static String[][] convertTo2DWithoutUsingGetRGB(BufferedImage image) {
 
