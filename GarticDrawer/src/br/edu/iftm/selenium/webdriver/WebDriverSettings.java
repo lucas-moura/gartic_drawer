@@ -24,8 +24,7 @@ public class WebDriverSettings {
 	
 	public static void esperarPorComponente(WebDriver driver, String id, int tempoSegundos)
 	{
-		WebDriverWait wait = new WebDriverWait(driver, 10);  
+		WebDriverWait wait = new WebDriverWait(driver, tempoSegundos);  
 		wait.until(ExpectedConditions.visibilityOfElementLocated(By.id(id)));
-		driver.manage().timeouts().implicitlyWait(tempoSegundos, TimeUnit.SECONDS);
 	}
 }
